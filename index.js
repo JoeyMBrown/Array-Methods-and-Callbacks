@@ -104,13 +104,13 @@ hint: the strings returned need to exactly match the string in step 4.
  */
 
 function getWinnersByYear(array, getYearsCB, getWinnersCB) {
-    const years = getYearsCB(array);
-    const winners = getWinnersCB(array);
+    const years = getYearsCB(array, getFinals);
+    const winners = getWinnersCB(array, getFinals);
 
     const winnersAndYears = [];
 
     for(let i = 0; i < years.length; i++) {
-        winnersAndYears.push(`In ${years[i]}, ${winners[i]} won the world cup!`)
+        winnersAndYears.push(`In ${years[i]}, ${winners[i]} won the world cup!`);
     }
     return winnersAndYears; 
 }
@@ -147,7 +147,7 @@ Create a function called `getCountryWins` that takes the parameters `data` and `
 Hint: Investigate your data to find "team initials"!
 Hint: use `.reduce` */
 
-function getCountryWins(/* code here */) {
+function getCountryWins(data, teamInitials) {
 
     /* code here */
 
