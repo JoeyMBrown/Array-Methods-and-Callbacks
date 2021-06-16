@@ -164,20 +164,69 @@ function getCountryWins(data, teamInitials) {
             teamWins++
         }
     }
-    console.log(finalsMatches);
+    //console.log(finalsMatches);
     return teamWins;
 }
 
-console.log(getCountryWins(fifaData, "FRG"));
+//console.log(getCountryWins(fifaData, "FRG"));
 
 /* 💪💪💪💪💪 Stretch 2: 💪💪💪💪💪 
 Write a function called getGoals() that accepts a parameter `data` and returns the team with the most goals score per appearance (average goals for) in the World Cup finals */
 
-function getGoals(/* code here */) {
+function getGoals(data) {
+    const finalsMatches = data.filter(function(item) {
+        if(item.Stage === 'Final') {
+            return true;
+        }
+    })
 
-    /* code here */
+    let teamBestAverage;
+    let bestAverage = 0;
 
+    let teams = [];
+
+    finalsMatches.map(function(item) {
+        teams.push(item["Home Team Name"]);
+        teams.push(item["Away Team Name"]);
+    })
+
+    let uniqueTeams = filterDuplicates(teams);
+
+    for(let i = 0; i < uniqueTeams.length; i++) {
+        let goalCounter = 0;
+        let currentMatches = 0;
+        
+        finalsMatches.map(function(item) {
+            if(uniqueTeams[i] === item["Home Team Name"]) {
+                goalCounter += item["Home Team Goals"];
+                currentMatches++;
+            } else if(uniqueTeams[i] === item ["Away Team Name"]) {
+                goalCounter += item["Away Team Goals"];
+                currentMatches++;
+            }
+        })
+        let averageGoals = goalCounter / currentMatches;
+
+        if(averageGoals > bestAverage) {
+            bestAverage = averageGoals;
+            teamBestAverage = uniqueTeams[i];
+        } 
+    }
+
+    return `${teamBestAverage} scored ${bestAverage} goals on average in all of their world cup apperances!`;
 }
+
+function filterDuplicates(teams) {
+    let filteredArray = [];
+        
+    filteredArray = teams.filter(function(item, index) {
+            return teams.indexOf(item) === index;
+    });
+
+    return filteredArray;
+}
+
+console.log(getGoals(fifaData));
 
 
 /* 💪💪💪💪💪 Stretch 3: 💪💪💪💪💪
